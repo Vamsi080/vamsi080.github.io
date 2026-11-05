@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vamsi Mikkili | Qt/QML &amp; C++ Embedded Software Engineer · Freelance Web &amp; App Developer</title>
+  <meta name="description" content="Vamsi Mikkili – Embedded Software Engineer in Chennai with 3.8+ years in Modern C++, Qt/QML and Qt WebAssembly for real-time radar and defence systems. Available for freelance website design, app UI design and Android app development.">
+  <meta name="keywords" content="Vamsi Mikkili, Qt developer, QML developer, C++ developer, embedded software engineer Chennai, Qt WebAssembly, Yocto, radar HMI, freelance website designer, Android app developer, app UI design">
+  <meta name="author" content="Vamsi Mikkili">
+  <meta name="theme-color" content="#070a13">
+  <meta property="og:title" content="Vamsi Mikkili | Qt/QML & C++ Embedded Software Engineer">
+  <meta property="og:description" content="Real-time HMIs for radar & defence systems. Freelance websites, app designs and Android apps.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://vamsi080.github.io/">
+  <meta property="og:image" content="https://vamsi080.github.io/mypic.jpg">
+  <link rel="icon" href="mypic.jpg">
+  <link rel="canonical" href="https://vamsi080.github.io/">
+  <!-- Paste your Google Search Console verification line here -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Vamsi Mikkili",
+    "jobTitle": "Embedded Software Engineer – Qt/QML & C++",
+    "email": "mailto:mikkilivamsi3@gmail.com",
+    "image": "https://vamsi080.github.io/mypic.jpg",
+    "address": { "@type": "PostalAddress", "addressLocality": "Chennai", "addressCountry": "IN" },
+    "alumniOf": "JNT University Kakinada",
+    "knowsAbout": ["C++", "Qt", "QML", "Qt WebAssembly", "Embedded Linux", "Yocto", "Website Design", "Android Apps"],
+    "url": "https://vamsi080.github.io/",
+    "sameAs": ["https://www.linkedin.com/in/vamsi-mikkili-930399377/", "https://github.com/Vamsi080"]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #070a13;
+      --bg-2: #0b1020;
+      --surface: rgba(255,255,255,0.035);
+      --surface-2: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.08);
+      --border-2: rgba(255,255,255,0.14);
+      --text: #b6c0d4;
+      --muted: #7a859c;
+      --heading: #ffffff;
+      --a1: #6366f1;   /* indigo */
+      --a2: #22d3ee;   /* cyan */
+      --a3: #a855f7;   /* violet */
+      --grad: linear-gradient(135deg, var(--a1), var(--a2));
+      --grad-text: linear-gradient(90deg, #818cf8, #22d3ee 60%, #a5f3fc);
+      --radius: 18px;
+      --ease: cubic-bezier(.2,.8,.2,1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+      -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .grad-text { background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    ::selection { background: rgba(99,102,241,.4); color: #fff; }
+
+    /* ---------- background layers ---------- */
+    #bg-canvas { position: fixed; inset: 0; z-index: -2; pointer-events: none; }
+    .bg-glow { position: fixed; inset: 0; z-index: -3; pointer-events: none;
+      background:
+        radial-gradient(800px 500px at 85% -10%, rgba(99,102,241,.18), transparent 60%),
+        radial-gradient(700px 500px at -10% 30%, rgba(34,211,238,.10), transparent 60%),
+        radial-gradient(600px 400px at 50% 110%, rgba(168,85,247,.10), transparent 60%),
+        var(--bg);
+    }
+    .cursor-glow { position: fixed; width: 500px; height: 500px; border-radius: 50%; pointer-events: none; z-index: -1;
+      background: radial-gradient(circle, rgba(99,102,241,.12), transparent 65%);
+      transform: translate(-50%,-50%); transition: opacity .3s; left: -999px; top: -999px; }
+
+    /* ---------- scroll progress ---------- */
+    .progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: var(--grad); z-index: 100; box-shadow: 0 0 12px var(--a2); }
+
+    /* ---------- NAV ---------- */
+    nav { position: fixed; top: 14px; left: 50%; transform: translateX(-50%); z-index: 60;
+      width: min(1160px, calc(100% - 28px)); border-radius: 16px; transition: background .3s, border-color .3s, box-shadow .3s;
+      border: 1px solid transparent; }
+    nav.scrolled { background: rgba(10,14,28,.72); backdrop-filter: blur(16px) saturate(160%); -webkit-backdrop-filter: blur(16px) saturate(160%);
+      border-color: var(--border); box-shadow: 0 10px 40px rgba(0,0,0,.35); }
+    nav .inner { display: flex; align-items: center; justify-content: space-between; height: 62px; padding: 0 18px; }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--heading); font-size: 1.05rem; letter-spacing: -.3px; }
+    .logo .mark { width: 34px; height: 34px; border-radius: 10px; background: var(--grad); display: grid; place-items: center; color: #fff; font-size: .85rem; font-weight: 800; box-shadow: 0 6px 20px rgba(99,102,241,.45); }
+    nav ul { list-style: none; display: flex; gap: 4px; }
+    nav ul a { font-size: .9rem; color: var(--muted); font-weight: 600; padding: 8px 14px; border-radius: 10px; transition: color .2s, background .2s; }
+    nav ul a:hover, nav ul a.active { color: var(--heading); background: var(--surface-2); }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .hamburger { display: none; width: 42px; height: 42px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: #fff; cursor: pointer; font-size: 1.2rem; }
+
+    /* ---------- BUTTONS ---------- */
+    .btn { position: relative; display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px; border-radius: 12px; font-weight: 700; font-size: .95rem;
+      transition: transform .25s var(--ease), box-shadow .25s, border-color .25s, background .25s; cursor: pointer; border: none; white-space: nowrap; }
+    .btn-primary { background: var(--grad); color: #fff; box-shadow: 0 10px 30px rgba(99,102,241,.35); overflow: hidden; }
+    .btn-primary::after { content: ''; position: absolute; top: 0; left: -120%; width: 60%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,.35), transparent); transform: skewX(-20deg); transition: left .7s; }
+    .btn-primary:hover::after { left: 140%; }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(99,102,241,.5); }
+    .btn-ghost { background: var(--surface); color: var(--heading); border: 1px solid var(--border-2); backdrop-filter: blur(8px); }
+    .btn-ghost:hover { transform: translateY(-3px); border-color: rgba(34,211,238,.5); background: var(--surface-2); }
+    .btn-sm { padding: 10px 18px; font-size: .86rem; border-radius: 10px; }
+
+    /* ---------- HERO ---------- */
+    .hero { min-height: 100vh; display: flex; align-items: center; padding: 130px 0 80px; position: relative; }
+    .hero::before { content: ''; position: absolute; inset: 0; z-index: -1; opacity: .18;
+      background: url('cover.jpg') center/cover no-repeat;
+      -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 85%); mask-image: linear-gradient(180deg, #000 0%, transparent 85%); }
+    .hero .container { display: grid; grid-template-columns: 1.15fr 1fr; gap: 60px; align-items: center; }
+    .hero-id { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+    .avatar-wrap { position: relative; width: 64px; height: 64px; flex-shrink: 0; }
+    .avatar-wrap::before { content: ''; position: absolute; inset: -3px; border-radius: 50%; background: conic-gradient(var(--a1), var(--a2), var(--a3), var(--a1)); animation: spin 4s linear infinite; }
+    .avatar-wrap img { position: relative; width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 3px solid var(--bg); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .badge { display: inline-flex; align-items: center; gap: 8px; font-size: .8rem; font-weight: 600; color: #a5f3fc;
+      background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.25); padding: 6px 14px; border-radius: 30px; }
+    .badge .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 0 rgba(34,197,94,.7); animation: ping 1.8s infinite; }
+    @keyframes ping { 70% { box-shadow: 0 0 0 10px rgba(34,197,94,0); } 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); } }
+    .hero h1 { font-size: clamp(2.6rem, 6vw, 4.4rem); line-height: 1.03; color: var(--heading); font-weight: 800; letter-spacing: -2px; }
+    .hero .typed-line { margin-top: 16px; font-size: clamp(1.15rem, 2.4vw, 1.6rem); font-weight: 700; color: var(--heading); min-height: 2.2em; }
+    .hero .typed-line .typed { background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .caret { display: inline-block; width: 3px; height: 1.1em; background: var(--a2); vertical-align: -3px; margin-left: 3px; animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    .hero p.lead { font-size: 1.08rem; margin: 18px 0 34px; max-width: 560px; }
+    .hero p.lead strong { color: var(--heading); }
+    .btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .trust { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; margin-top: 38px; font-size: .82rem; color: var(--muted); }
+    .trust b { color: var(--heading); font-weight: 700; letter-spacing: .5px; }
+    .trust .sep { width: 4px; height: 4px; border-radius: 50%; background: var(--muted); opacity: .5; }
+
+    /* radar visual */
+    .radar-card { position: relative; aspect-ratio: 1; max-width: 470px; margin-left: auto; width: 100%; }
+    .radar { position: absolute; inset: 0; border-radius: 50%;
+      background:
+        radial-gradient(circle, transparent 0 24.5%, rgba(34,211,238,.18) 25% 25.4%, transparent 25.8% 49.5%, rgba(34,211,238,.18) 50% 50.4%, transparent 50.8% 74.5%, rgba(34,211,238,.18) 75% 75.4%, transparent 75.8%),
+        radial-gradient(circle, rgba(99,102,241,.12), rgba(7,10,19,.6) 70%);
+      border: 1px solid rgba(34,211,238,.35); box-shadow: 0 0 80px rgba(34,211,238,.12), inset 0 0 60px rgba(99,102,241,.15); overflow: hidden; }
+    .radar::before, .radar::after { content: ''; position: absolute; background: rgba(34,211,238,.18); }
+    .radar::before { left: 50%; top: 0; bottom: 0; width: 1px; }
+    .radar::after { top: 50%; left: 0; right: 0; height: 1px; }
+    .sweep { position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 0deg, rgba(34,211,238,.55), rgba(34,211,238,0) 70deg, transparent 360deg); animation: spin 4s linear infinite; }
+    .blip { position: absolute; width: 10px; height: 10px; border-radius: 50%; background: #a5f3fc; box-shadow: 0 0 14px #22d3ee, 0 0 4px #fff; animation: blipFade 4s linear infinite; }
+    .blip::after { content: ''; position: absolute; inset: -6px; border-radius: 50%; border: 1px solid rgba(165,243,252,.6); animation: ring 4s linear infinite; animation-delay: inherit; }
+    @keyframes blipFade { 0%,100% { opacity: .15; } 8% { opacity: 1; } 60% { opacity: .35; } }
+    @keyframes ring { 0% { transform: scale(.4); opacity: 1; } 30% { transform: scale(2.2); opacity: 0; } 100% { opacity: 0; } }
+    .float-chip { position: absolute; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 14px;
+      background: rgba(13,18,34,.8); border: 1px solid var(--border-2); backdrop-filter: blur(12px); box-shadow: 0 14px 40px rgba(0,0,0,.4);
+      font-size: .8rem; color: var(--heading); font-weight: 600; animation: float 6s ease-in-out infinite; }
+    .float-chip small { display: block; color: var(--muted); font-weight: 500; font-size: .72rem; }
+    .float-chip .ic { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--grad); font-size: .95rem; }
+    .fc1 { top: 6%; left: -6%; }
+    .fc2 { bottom: 12%; left: -10%; animation-delay: -2s; }
+    .fc3 { top: 44%; right: -8%; animation-delay: -4s; }
+    @keyframes float { 50% { transform: translateY(-12px); } }
+
+    .scroll-hint { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); width: 26px; height: 42px; border: 2px solid var(--border-2); border-radius: 14px; }
+    .scroll-hint::after { content: ''; position: absolute; top: 7px; left: 50%; width: 4px; height: 8px; border-radius: 2px; background: var(--a2); transform: translateX(-50%); animation: wheel 1.8s infinite; }
+    @keyframes wheel { 0% { opacity: 1; transform: translate(-50%,0); } 100% { opacity: 0; transform: translate(-50%,14px); } }
+
+    /* ---------- MARQUEE ---------- */
+    .marquee { position: relative; overflow: hidden; white-space: nowrap; padding: 22px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(255,255,255,.02);
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+    .marquee.tilt { transform: rotate(-1.5deg); margin: 30px -20px; background: var(--grad); border: none; -webkit-mask-image: none; mask-image: none; box-shadow: 0 20px 60px rgba(99,102,241,.3); }
+    .marquee-track { display: inline-flex; animation: scroll 38s linear infinite; }
+    .marquee.reverse .marquee-track { animation-direction: reverse; animation-duration: 48s; }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    .marquee-track span { display: inline-flex; align-items: center; gap: 30px; padding: 0 30px; font-size: 1.25rem; font-weight: 800; letter-spacing: -.3px; color: var(--heading); }
+    .marquee-track span::after { content: '✦'; font-size: 1rem; color: var(--a2); }
+    .marquee.tilt .marquee-track span::after { color: rgba(255,255,255,.7); }
+    .marquee.reverse .marquee-track span { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 1rem; color: var(--text); }
+    @keyframes scroll { to { transform: translateX(-50%); } }
+
+    /* ---------- SECTIONS ---------- */
+    section { padding: 110px 0; position: relative; }
+    .sec-head { margin-bottom: 56px; max-width: 700px; }
+    .sec-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: .8rem; color: #a5b4fc; letter-spacing: 1px; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 30px; background: rgba(99,102,241,.1); border: 1px solid rgba(99,102,241,.25); }
+    .sec-head h2 { font-size: clamp(2rem, 4.2vw, 3rem); color: var(--heading); font-weight: 800; letter-spacing: -1.5px; line-height: 1.12; margin-top: 16px; }
+    .sec-head p { color: var(--muted); margin-top: 14px; font-size: 1.04rem; }
+
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); position: relative; overflow: hidden;
+      transition: transform .35s var(--ease), border-color .35s, background .35s, box-shadow .35s; }
+    .card::before { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .35s;
+      background: radial-gradient(400px circle at var(--mx,50%) var(--my,50%), rgba(99,102,241,.16), transparent 45%); }
+    .card:hover { border-color: rgba(129,140,248,.45); background: var(--surface-2); box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+    .card:hover::before { opacity: 1; }
+
+    /* stats */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: -40px; }
+    .stat { padding: 30px 22px; text-align: center; }
+    .stat h3 { font-size: 2.6rem; font-weight: 800; letter-spacing: -1px; line-height: 1.1; }
+    .stat p { color: var(--muted); font-size: .88rem; margin-top: 6px; }
+
+    /* about */
+    .about-grid { display: grid; grid-template-columns: 380px 1fr; gap: 64px; align-items: center; }
+    .photo-frame { position: relative; border-radius: 26px; padding: 3px; background: var(--grad); box-shadow: 0 30px 70px rgba(99,102,241,.25); }
+    .photo-frame img { border-radius: 23px; width: 100%; aspect-ratio: 4/5; object-fit: cover; background: var(--bg-2); }
+    .photo-frame .exp { position: absolute; right: -18px; bottom: 26px; padding: 16px 20px; border-radius: 16px; background: rgba(13,18,34,.9); border: 1px solid var(--border-2); backdrop-filter: blur(12px); text-align: center; }
+    .photo-frame .exp b { display: block; font-size: 1.9rem; font-weight: 800; line-height: 1; }
+    .photo-frame .exp small { color: var(--muted); font-size: .76rem; }
+    .about-text p { margin-bottom: 16px; font-size: 1.04rem; }
+    .about-text strong { color: var(--heading); }
+    .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 26px; }
+    .fact { padding: 16px 18px; display: flex; gap: 14px; align-items: center; }
+    .fact .ic { width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; background: rgba(99,102,241,.14); flex-shrink: 0; }
+    .fact small { display: block; color: var(--muted); font-size: .76rem; }
+    .fact b { color: var(--heading); font-weight: 700; font-size: .9rem; word-break: break-word; }
+
+    /* skills */
+    .skill-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .skill-card { padding: 28px; }
+    .skill-card .ic { width: 50px; height: 50px; border-radius: 14px; display: grid; place-items: center; background: var(--grad); color: #fff; font-weight: 800; font-size: .95rem; margin-bottom: 18px; box-shadow: 0 10px 26px rgba(99,102,241,.35); font-family: 'JetBrains Mono', monospace; }
+    .skill-card h3 { color: var(--heading); font-size: 1.12rem; margin-bottom: 14px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chips span { font-size: .77rem; font-family: 'JetBrains Mono', monospace; padding: 5px 11px; border-radius: 8px; background: rgba(255,255,255,.04); border: 1px solid var(--border); color: var(--text); transition: border-color .2s, color .2s; }
+    .card:hover .chips span { border-color: rgba(34,211,238,.25); }
+
+    /* experience */
+    .timeline { position: relative; max-width: 900px; margin: 0 auto; }
+    .timeline::before { content: ''; position: absolute; left: 21px; top: 0; bottom: 0; width: 2px; background: linear-gradient(var(--a1), var(--a2), transparent); }
+    .job { position: relative; padding-left: 70px; margin-bottom: 26px; }
+    .job .node { position: absolute; left: 8px; top: 30px; width: 28px; height: 28px; border-radius: 50%; background: var(--bg); border: 2px solid var(--a1); display: grid; place-items: center; }
+    .job .node::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--a2); box-shadow: 0 0 12px var(--a2); }
+    .job.current .node { border-color: var(--a2); animation: ping 2s infinite; }
+    .job .card { padding: 26px 28px; }
+    .job-head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 14px; align-items: flex-start; }
+    .job h3 { color: var(--heading); font-size: 1.2rem; }
+    .job .company { font-weight: 700; }
+    .date { font-family: 'JetBrains Mono', monospace; font-size: .78rem; color: #a5f3fc; padding: 5px 11px; border-radius: 8px; background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.2); }
+    .job ul, .proj ul { list-style: none; margin-top: 12px; }
+    .job li, .proj li { position: relative; padding-left: 22px; margin-bottom: 7px; }
+    .job li::before, .proj li::before { content: '▹'; position: absolute; left: 0; color: var(--a2); }
+
+    /* projects */
+    .proj-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    .proj { padding: 30px; display: flex; flex-direction: column; }
+    .proj.featured { grid-column: span 2; display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; }
+    .proj-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; gap: 10px; }
+    .proj .type { font-family: 'JetBrains Mono', monospace; font-size: .74rem; color: #a5b4fc; text-transform: uppercase; letter-spacing: .8px; }
+    .proj .num { font-family: 'JetBrains Mono', monospace; font-size: .9rem; color: var(--muted); }
+    .proj h3 { color: var(--heading); font-size: 1.35rem; letter-spacing: -.4px; line-height: 1.3; }
+    .client { display: inline-flex; align-items: center; gap: 6px; font-size: .82rem; font-weight: 700; margin: 8px 0 12px; padding: 4px 10px; border-radius: 8px; background: rgba(168,85,247,.12); color: #d8b4fe; border: 1px solid rgba(168,85,247,.25); width: fit-content; }
+    .proj p { font-size: .95rem; }
+    .proj ul { font-size: .92rem; flex: 1; }
+    .proj .chips { margin-top: 18px; }
+    .feat-visual { border-radius: 14px; border: 1px solid var(--border); background: radial-gradient(circle at 50% 50%, rgba(34,211,238,.12), transparent 60%), #0a0f1e; position: relative; overflow: hidden; min-height: 260px; display: grid; place-items: center; }
+    .feat-visual .radar { position: relative; width: 70%; aspect-ratio: 1; inset: auto; }
+
+    /* services */
+    .serv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .serv { padding: 30px; }
+    .serv .ic { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; font-size: 1.6rem; margin-bottom: 18px; background: rgba(255,255,255,.05); border: 1px solid var(--border-2); transition: transform .35s var(--ease), background .35s; }
+    .serv:hover .ic { transform: scale(1.08) rotate(-6deg); background: var(--grad); }
+    .serv h3 { color: var(--heading); font-size: 1.12rem; margin-bottom: 8px; }
+    .serv p { font-size: .93rem; color: var(--muted); }
+    .process { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 46px; }
+    .step { padding: 22px; text-align: center; }
+    .step b { display: block; font-size: 1.6rem; font-weight: 800; }
+    .step h4 { color: var(--heading); margin: 4px 0; font-size: 1rem; }
+    .step p { font-size: .85rem; color: var(--muted); }
+    .freelance-cta { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+
+    /* education */
+    .edu { display: flex; gap: 22px; align-items: center; padding: 28px; max-width: 760px; margin: 0 auto; }
+    .edu .ic { width: 60px; height: 60px; border-radius: 16px; display: grid; place-items: center; background: var(--grad); font-size: 1.6rem; flex-shrink: 0; }
+    .edu h3 { color: var(--heading); font-size: 1.15rem; }
+
+    /* contact */
+    .contact-box { position: relative; padding: 70px 40px; text-align: center; border-radius: 28px; overflow: hidden; border: 1px solid var(--border-2);
+      background: radial-gradient(600px 300px at 20% 0%, rgba(99,102,241,.3), transparent 60%), radial-gradient(500px 300px at 90% 100%, rgba(34,211,238,.2), transparent 60%), rgba(255,255,255,.03); }
+    .contact-box h2 { font-size: clamp(2rem, 5vw, 3.4rem); color: var(--heading); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-top: 16px; }
+    .contact-box p { color: var(--text); margin: 14px auto 32px; max-width: 560px; }
+    .contact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 34px; text-align: left; }
+    .c-item { padding: 18px; display: flex; gap: 12px; align-items: center; }
+    .c-item .ic { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: rgba(255,255,255,.06); flex-shrink: 0; font-size: 1.1rem; }
+    .c-item small { display: block; color: var(--muted); font-size: .74rem; }
+    .c-item b { color: var(--heading); font-size: .86rem; word-break: break-all; }
+    .copy-toast { position: fixed; bottom: 30px; left: 50%; transform: translate(-50%, 30px); opacity: 0; padding: 12px 20px; border-radius: 12px; background: var(--grad); color: #fff; font-weight: 700; font-size: .9rem; transition: .35s var(--ease); z-index: 99; pointer-events: none; }
+    .copy-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    footer { border-top: 1px solid var(--border); padding: 30px 0; color: var(--muted); font-size: .86rem; }
+    footer .container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+    /* floating whatsapp + back to top */
+    .fab { position: fixed; right: 22px; z-index: 70; width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; box-shadow: 0 12px 30px rgba(0,0,0,.4); transition: transform .3s var(--ease), opacity .3s; }
+    .fab:hover { transform: translateY(-4px) scale(1.05); }
+    .fab-wa { bottom: 22px; background: #25d366; }
+    .fab-top { bottom: 88px; background: rgba(20,26,46,.9); border: 1px solid var(--border-2); color: #fff; font-size: 1.2rem; opacity: 0; pointer-events: none; }
+    .fab-top.show { opacity: 1; pointer-events: auto; }
+
+    /* reveal animations */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+    .reveal.visible { opacity: 1; transform: none; }
+    .d1 { transition-delay: .08s; } .d2 { transition-delay: .16s; } .d3 { transition-delay: .24s; } .d4 { transition-delay: .32s; } .d5 { transition-delay: .4s; }
+
+    /* mobile menu */
+    .mobile-menu { position: fixed; inset: 0; z-index: 55; background: rgba(7,10,19,.96); backdrop-filter: blur(14px); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px;
+      opacity: 0; pointer-events: none; transition: opacity .3s; }
+    .mobile-menu.open { opacity: 1; pointer-events: auto; }
+    .mobile-menu a { font-size: 1.6rem; font-weight: 800; color: var(--heading); padding: 10px; }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1000px) {
+      .hero .container, .about-grid { grid-template-columns: 1fr; }
+      .radar-card { margin: 20px auto 0; max-width: 380px; }
+      .about-grid .photo-frame { max-width: 340px; }
+      .skill-grid, .serv-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats, .process, .contact-grid { grid-template-columns: repeat(2, 1fr); }
+      .proj.featured { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      nav ul, .nav-right .btn { display: none; }
+      .hamburger { display: grid; place-items: center; }
+      .container { padding: 0 16px; }
+      section { padding: 76px 0; }
+      .hero { padding: 110px 0 70px; }
+      .hero h1 { letter-spacing: -1px; }
+      .skill-grid, .serv-grid, .proj-grid { grid-template-columns: 1fr; }
+      .proj.featured { grid-column: auto; }
+      .facts { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-box { padding: 48px 18px; }
+      .fc1 { left: 0; } .fc2 { left: -2%; } .fc3 { right: 0; }
+      .photo-frame .exp { right: 10px; }
+      .edu { flex-direction: column; align-items: flex-start; }
+      .scroll-hint { display: none; }
+      .btns .btn { flex: 1; justify-content: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-glow"></div>
+  <canvas id="bg-canvas"></canvas>
+  <div class="cursor-glow" id="cursorGlow"></div>
+  <div class="progress" id="progress"></div>
+
+  <!-- ================= NAV ================= -->
+  <nav id="nav">
+    <div class="inner">
+      <a href="#" class="logo"><span class="mark">VM</span> Vamsi Mikkili</a>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#services">Freelance</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="#contact" class="btn btn-primary btn-sm">Hire Me</a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#services">Freelance</a>
+    <a href="#contact" class="btn btn-primary" style="margin-top:14px;font-size:1rem">Hire Me</a>
+  </div>
+
+  <!-- ================= HERO ================= -->
+  <header class="hero" id="home">
+    <div class="container">
+      <div>
+        <div class="hero-id reveal">
+          <div class="avatar-wrap"><img src="mypic.jpg" alt="Vamsi Mikkili"></div>
+          <div class="badge"><span class="dot"></span> Open to full-time roles &amp; freelance</div>
+        </div>
+        <h1 class="reveal d1">Hi, I'm <span class="grad-text">Vamsi Mikkili</span></h1>
+        <div class="typed-line reveal d2">I build <span class="typed" id="typed"></span><span class="caret"></span></div>
+        <p class="lead reveal d3">
+          Embedded Software Engineer with <strong>3.8+ years</strong> of experience in
+          <strong>Modern C++, Qt/QML and Qt WebAssembly</strong>, delivering real-time, mission-critical
+          software for <strong>radar and defence systems</strong>.
+        </p>
+        <div class="btns reveal d4">
+          <a href="#contact" class="btn btn-primary">Let's Work Together →</a>
+          <a href="resume.pdf" class="btn btn-ghost" download="Vamsi_Mikkili_Resume.pdf">⬇ Download Resume</a>
+        </div>
+        <div class="trust reveal d5">
+          Delivered for <b>DRDO‑DGRE</b><span class="sep"></span><b>DRDO‑NSTL</b><span class="sep"></span><b>DRDO‑DEAL</b><span class="sep"></span><b>INS VALSURA</b>
+        </div>
+      </div>
+
+      <div class="radar-card reveal d2" aria-hidden="true">
+        <div class="radar">
+          <div class="sweep"></div>
+          <span class="blip" style="top:28%;left:62%;animation-delay:-3.3s"></span>
+          <span class="blip" style="top:64%;left:70%;animation-delay:-2.4s"></span>
+          <span class="blip" style="top:70%;left:30%;animation-delay:-1.2s"></span>
+          <span class="blip" style="top:34%;left:26%;animation-delay:-0.3s"></span>
+        </div>
+        <div class="float-chip fc1"><span class="ic">⚡</span><div>Real-time UI<small>30 FPS radar engine</small></div></div>
+        <div class="float-chip fc2"><span class="ic">🧩</span><div>Qt 6 · QML · C++17<small>Desktop · Embedded · Web</small></div></div>
+        <div class="float-chip fc3"><span class="ic">🛰️</span><div>Defence Grade<small>Mission-critical</small></div></div>
+      </div>
+    </div>
+    <div class="scroll-hint"></div>
+  </header>
+
+  <!-- ================= MARQUEE (FREELANCE) ================= -->
+  <div class="marquee tilt" aria-label="Freelance services">
+    <div class="marquee-track">
+      <span>Website Design</span><span>Website Development</span><span>App UI/UX Design</span><span>Android Applications</span><span>Qt Desktop Apps</span><span>Dashboards &amp; HMI</span><span>Qt WebAssembly</span><span>Available for Freelance</span>
+      <span>Website Design</span><span>Website Development</span><span>App UI/UX Design</span><span>Android Applications</span><span>Qt Desktop Apps</span><span>Dashboards &amp; HMI</span><span>Qt WebAssembly</span><span>Available for Freelance</span>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ================= STATS ================= -->
+    <section style="padding-top:80px;padding-bottom:0">
+      <div class="container">
+        <div class="stats">
+          <div class="card stat reveal"><h3 class="grad-text"><span class="count" data-to="3.8" data-dec="1">0</span>+</h3><p>Years of Experience</p></div>
+          <div class="card stat reveal d1"><h3 class="grad-text"><span class="count" data-to="5">0</span>+</h3><p>Defence &amp; Embedded Projects</p></div>
+          <div class="card stat reveal d2"><h3 class="grad-text"><span class="count" data-to="4">0</span></h3><p>Defence Clients Served</p></div>
+          <div class="card stat reveal d3"><h3 class="grad-text"><span class="count" data-to="30">0</span> FPS</h3><p>Real-time Radar Rendering</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="photo-frame reveal">
+            <img src="mypic.jpg" alt="Vamsi Mikkili, Embedded Software Engineer">
+            <div class="exp"><b class="grad-text">3.8+</b><small>Years building<br>real-time software</small></div>
+          </div>
+          <div class="about-text">
+            <div class="sec-head" style="margin-bottom:24px">
+              <span class="eyebrow reveal">About Me</span>
+              <h2 class="reveal d1">Building software where <span class="grad-text">performance is critical</span></h2>
+            </div>
+            <p class="reveal d2">
+              I'm <strong>Vamsi Mikkili</strong>, an Embedded Software Engineer based in <strong>Chennai</strong>,
+              specialising in <strong>Modern C++, Qt/QML and Qt WebAssembly</strong> for real-time embedded and defence systems.
+            </p>
+            <p class="reveal d2">
+              I build complete solutions, from <strong>responsive QML operator interfaces</strong> to
+              <strong>multi-threaded C++ backends</strong> that talk directly to hardware over RS-422/232, SPI, I2C,
+              UART and TCP/UDP, for <strong>DRDO-DGRE, DRDO-NSTL, DRDO-DEAL and INS Valsura</strong>.
+            </p>
+            <p class="reveal d3">
+              I write clean, maintainable code, profile with QML Profiler, Valgrind and GDB to keep apps fast and leak-free,
+              and mentor junior engineers through code reviews in Agile teams.
+            </p>
+            <div class="facts">
+              <div class="card fact reveal d3"><span class="ic">💼</span><div><small>Current Role</small><b>QT Design Engineer · Jeanuvs</b></div></div>
+              <div class="card fact reveal d3"><span class="ic">📍</span><div><small>Location</small><b>Chennai, India</b></div></div>
+              <div class="card fact reveal d4"><span class="ic">🎓</span><div><small>Education</small><b>B.Tech CSE · JNTU Kakinada</b></div></div>
+              <div class="card fact reveal d4"><span class="ic">✉️</span><div><small>Email</small><b>mikkilivamsi3@gmail.com</b></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SKILLS ================= -->
+    <section id="skills">
+      <div class="container">
+        <div class="sec-head center">
+          <span class="eyebrow reveal">Tech Stack</span>
+          <h2 class="reveal d1">Skills &amp; <span class="grad-text">Technologies</span></h2>
+          <p class="reveal d2">The tools I use to design, build, debug and ship production-grade embedded software.</p>
+        </div>
+        <div class="skill-grid">
+          <div class="card skill-card reveal"><div class="ic">C++</div><h3>Programming</h3>
+            <div class="chips"><span>C++11/14/17</span><span>QML</span><span>Python</span><span>JavaScript</span><span>OOP</span><span>Multi-threading</span><span>Smart Pointers</span></div></div>
+          <div class="card skill-card reveal d1"><div class="ic">Qt</div><h3>Qt Framework</h3>
+            <div class="chips"><span>Qt 6 / Qt 5</span><span>Qt Quick</span><span>Qt WebAssembly</span><span>QAbstractListModel</span><span>Signals &amp; Slots</span><span>QML Plugins</span><span>QProcess</span></div></div>
+          <div class="card skill-card reveal d2"><div class="ic">⚡</div><h3>Hardware &amp; Protocols</h3>
+            <div class="chips"><span>RS-422</span><span>RS-232</span><span>SPI</span><span>I2C</span><span>UART</span><span>TCP/IP</span><span>UDP</span><span>mmap</span><span>FPGA Registers</span></div></div>
+          <div class="card skill-card reveal"><div class="ic">$_</div><h3>Embedded &amp; Build</h3>
+            <div class="chips"><span>Embedded Linux</span><span>Yocto / Poky</span><span>BitBake</span><span>CMake</span><span>Make</span><span>GCC / MinGW</span><span>Cross-compile</span><span>Board Bring-up</span></div></div>
+          <div class="card skill-card reveal d1"><div class="ic">🐞</div><h3>Debugging &amp; Analysis</h3>
+            <div class="chips"><span>QML Profiler</span><span>Valgrind</span><span>GDB</span><span>Qt Inspector</span><span>Memory Leak Analysis</span></div></div>
+          <div class="card skill-card reveal d2"><div class="ic">⚙</div><h3>Tools &amp; Workflow</h3>
+            <div class="chips"><span>Qt Creator</span><span>VS Code</span><span>Git / GitHub</span><span>Jira</span><span>Taiga</span><span>CI/CD</span><span>Agile / Scrum</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TECH MARQUEE ================= -->
+    <div class="marquee reverse" aria-label="Technologies">
+      <div class="marquee-track">
+        <span>C++17</span><span>Qt 6</span><span>QML</span><span>Qt WebAssembly</span><span>Embedded Linux</span><span>Yocto</span><span>RS-422</span><span>SPI · I2C · UART</span><span>TCP/UDP</span><span>Android</span><span>HTML · CSS · JS</span><span>UI/UX</span>
+        <span>C++17</span><span>Qt 6</span><span>QML</span><span>Qt WebAssembly</span><span>Embedded Linux</span><span>Yocto</span><span>RS-422</span><span>SPI · I2C · UART</span><span>TCP/UDP</span><span>Android</span><span>HTML · CSS · JS</span><span>UI/UX</span>
+      </div>
+    </div>
+
+    <!-- ================= EXPERIENCE ================= -->
+    <section id="experience">
+      <div class="container">
+        <div class="sec-head center">
+          <span class="eyebrow reveal">Career</span>
+          <h2 class="reveal d1">Work <span class="grad-text">Experience</span></h2>
+        </div>
+        <div class="timeline">
+          <div class="job current reveal">
+            <span class="node"></span>
+            <div class="card">
+              <div class="job-head">
+                <div><h3>QT Design Engineer</h3><div class="company grad-text">Jeanuvs Pvt Ltd</div></div>
+                <span class="date">Aug 2025 – Present</span>
+              </div>
+              <ul>
+                <li>Design and develop real-time Qt 6/QML HMIs and C++ backends for radar and defence applications.</li>
+                <li>Build Qt WebAssembly front-ends so operator dashboards run both natively and in the browser.</li>
+                <li>Mentor junior engineers through code reviews and enforce clean-coding standards.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="job reveal">
+            <span class="node"></span>
+            <div class="card">
+              <div class="job-head">
+                <div><h3>Associate Tech Specialist</h3><div class="company grad-text">Airaa Corporates</div></div>
+                <span class="date">Mar 2024 – Jul 2025</span>
+              </div>
+              <ul>
+                <li>Developed Qt/QML applications integrated with hardware over RS-422/232, UART and UDP/TCP.</li>
+                <li>Worked on Embedded Linux with custom Yocto/BitBake builds and cross-compilation.</li>
+                <li>Delivered in Agile sprints with Jira, Git and CI/CD pipelines.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="job reveal">
+            <span class="node"></span>
+            <div class="card">
+              <div class="job-head">
+                <div><h3>Engineer Trainee</h3><div class="company grad-text">System Aids</div></div>
+                <span class="date">Dec 2022 – Jan 2024</span>
+              </div>
+              <ul>
+                <li>Built C++/Qt desktop features and reusable QML UI components.</li>
+                <li>Debugged and optimised applications using GDB and Valgrind.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROJECTS ================= -->
+    <section id="projects">
+      <div class="container">
+        <div class="sec-head center">
+          <span class="eyebrow reveal">Portfolio</span>
+          <h2 class="reveal d1">Featured <span class="grad-text">Projects</span></h2>
+          <p class="reveal d2">Mission-critical Qt/QML and C++ software delivered for defence labs and embedded hardware.</p>
+        </div>
+        <div class="proj-grid">
+
+          <div class="card proj featured reveal">
+            <div>
+              <div class="proj-top"><span class="type">Naval Radar · Tactical Display</span><span class="num">01</span></div>
+              <h3>Naval Phased Array Radar HMI</h3>
+              <span class="client">⚓ INS Valsura</span>
+              <p>High-performance radar HMI and control software for real-time scanning, tracking and tactical display across CW, FMCW and Pulsed modes.</p>
+              <ul>
+                <li>30 FPS radar engine with smooth 360° sweep rotation.</li>
+                <li>C++ QAbstractListModel tracking multiple targets with range, azimuth and velocity.</li>
+                <li>GPU-accelerated polar scope, FFT Doppler, ISAR and Range-Doppler heatmap views.</li>
+              </ul>
+              <div class="chips"><span>C++17</span><span>Qt 6 Quick</span><span>QML</span><span>CMake</span><span>FFT</span></div>
+            </div>
+            <div class="feat-visual" aria-hidden="true">
+              <div class="radar"><div class="sweep"></div>
+                <span class="blip" style="top:30%;left:60%;animation-delay:-3s"></span>
+                <span class="blip" style="top:62%;left:36%;animation-delay:-1s"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card proj reveal">
+            <div class="proj-top"><span class="type">Real-time Radar · Early Warning</span><span class="num">02</span></div>
+            <h3>Avalanche Detection Radar</h3>
+            <span class="client">🏔️ DRDO – DGRE</span>
+            <p>Embedded radar monitoring and control system that detects avalanche threats in high-altitude regions and issues early warnings.</p>
+            <ul>
+              <li>QML HMI for real-time target tracking, GIS map view and operational control.</li>
+              <li>Multi-threaded C++ daemon parsing live DSP data frames via mmap.</li>
+              <li>SQLite telemetry, user login, automated alerts, RTSP camera feeds and log export.</li>
+            </ul>
+            <div class="chips"><span>C++17</span><span>Qt 6/QML</span><span>Qt Wasm</span><span>Embedded Linux</span><span>SQLite</span></div>
+          </div>
+
+          <div class="card proj reveal d1">
+            <div class="proj-top"><span class="type">Telemetry · Data Retrieval</span><span class="num">03</span></div>
+            <h3>RF On-Board Data Retrieval System</h3>
+            <span class="client">📡 DRDO – NSTL</span>
+            <p>Mission-critical system for telemetry recording, peripheral diagnostics, pre-launch configuration and radio interface testing.</p>
+            <ul>
+              <li>Master controller GUI with an ICD binary protocol and CRC-16 across 20 message types.</li>
+              <li>Simultaneous bi-directional RS-422 and RS-232 communication with error monitoring.</li>
+              <li>High-speed UDP telemetry streaming, hex frame logging and data recording.</li>
+            </ul>
+            <div class="chips"><span>C++</span><span>Qt 6/QML</span><span>RS-422/232</span><span>UDP</span><span>CRC-16</span></div>
+          </div>
+
+          <div class="card proj reveal">
+            <div class="proj-top"><span class="type">Board Monitoring · Web + Desktop</span><span class="num">04</span></div>
+            <h3>APBR Control &amp; Monitoring Suite</h3>
+            <span class="client">🔧 DRDO – DEAL</span>
+            <p>Dashboard to monitor and configure a Zynq UltraScale+ processing board for radios.</p>
+            <ul>
+              <li>Live voltage, current, temperature, RF, Ethernet, EEPROM, SSD and USB status.</li>
+              <li>Client–server design with a JSON protocol over WebSockets.</li>
+              <li>One codebase running natively and in the browser via WebAssembly.</li>
+            </ul>
+            <div class="chips"><span>Qt 6</span><span>QML</span><span>WebSockets</span><span>WebAssembly</span><span>Python</span></div>
+          </div>
+
+          <div class="card proj reveal d1">
+            <div class="proj-top"><span class="type">Manufacturing · Automation</span><span class="num">05</span></div>
+            <h3>Embedded Manufacturing Flashing Tool</h3>
+            <span class="client">🏭 NXP i.MX · Raspberry Pi 4</span>
+            <p>Cross-platform tool that automates flashing firmware and software onto embedded boards.</p>
+            <ul>
+              <li>Serial command-based flashing with device availability checks.</li>
+              <li>Real-time USB detection of board connect and disconnect.</li>
+              <li>MVP architecture, QProcess automation, progress tracking and detailed logs.</li>
+            </ul>
+            <div class="chips"><span>Qt/QML</span><span>C++</span><span>Yocto</span><span>Poky</span><span>BitBake</span></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FREELANCE ================= -->
+    <section id="services">
+      <div class="container">
+        <div class="sec-head center">
+          <span class="eyebrow reveal">Freelance Services</span>
+          <h2 class="reveal d1">Need a website or an app?<br><span class="grad-text">Let's build it.</span></h2>
+          <p class="reveal d2">I take on freelance projects for businesses, startups and individuals, from a simple business website to a complete app.</p>
+        </div>
+        <div class="serv-grid">
+          <div class="card serv reveal"><div class="ic">🌐</div><h3>Website Design &amp; Development</h3><p>Fast, modern, mobile-friendly websites for businesses, portfolios and startups, ready for Google search.</p></div>
+          <div class="card serv reveal d1"><div class="ic">🎨</div><h3>App UI / UX Design</h3><p>Clean, professional screen designs and prototypes for mobile, desktop and web apps.</p></div>
+          <div class="card serv reveal d2"><div class="ic">📱</div><h3>Android Applications</h3><p>Smooth, reliable Android apps built with Qt/QML, from idea to a working app.</p></div>
+          <div class="card serv reveal"><div class="ic">🖥️</div><h3>Qt Desktop Applications</h3><p>Cross-platform Windows and Linux software with polished QML interfaces.</p></div>
+          <div class="card serv reveal d1"><div class="ic">📊</div><h3>Dashboards &amp; HMI</h3><p>Real-time monitoring dashboards and control panels for hardware and industrial systems.</p></div>
+          <div class="card serv reveal d2"><div class="ic">⚡</div><h3>Qt WebAssembly Apps</h3><p>Bring existing Qt applications to the browser with no installation needed.</p></div>
+        </div>
+
+        <div class="process">
+          <div class="card step reveal"><b class="grad-text">01</b><h4>Discuss</h4><p>Tell me your idea and goals.</p></div>
+          <div class="card step reveal d1"><b class="grad-text">02</b><h4>Design</h4><p>Clean screens you approve first.</p></div>
+          <div class="card step reveal d2"><b class="grad-text">03</b><h4>Develop</h4><p>Fast, tested, quality code.</p></div>
+          <div class="card step reveal d3"><b class="grad-text">04</b><h4>Deliver</h4><p>Launch plus support after.</p></div>
+        </div>
+
+        <div class="freelance-cta reveal">
+          <a href="https://wa.me/918688581103?text=Hi%20Vamsi%2C%20I%20have%20a%20project%20for%20you" class="btn btn-primary" target="_blank" rel="noopener">💬 Chat on WhatsApp</a>
+          <a href="mailto:mikkilivamsi3@gmail.com?subject=Freelance%20Project%20Enquiry" class="btn btn-ghost">✉️ Get a Free Quote</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EDUCATION ================= -->
+    <section style="padding-top:40px;padding-bottom:40px">
+      <div class="container">
+        <div class="card edu reveal">
+          <div class="ic">🎓</div>
+          <div>
+            <span class="eyebrow">Education</span>
+            <h3 style="margin-top:10px">Bachelor of Technology – Computer Science &amp; Engineering</h3>
+            <p>JNT University Kakinada, India</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section id="contact">
+      <div class="container">
+        <div class="contact-box reveal">
+          <span class="eyebrow">Contact</span>
+          <h2>Let's build something<br><span class="grad-text">great together</span></h2>
+          <p>Hiring for a Qt/QML or C++ role, or need a website, app design or Android app? I usually reply within 24 hours.</p>
+          <div class="btns" style="justify-content:center">
+            <a href="mailto:mikkilivamsi3@gmail.com" class="btn btn-primary">✉️ Send an Email</a>
+            <a href="resume.pdf" class="btn btn-ghost" download="Vamsi_Mikkili_Resume.pdf">⬇ Download Resume</a>
+          </div>
+          <div class="contact-grid">
+            <a class="card c-item" href="#" data-copy="mikkilivamsi3@gmail.com"><span class="ic">✉️</span><div><small>Email · click to copy</small><b>mikkilivamsi3@gmail.com</b></div></a>
+            <a class="card c-item" href="tel:+918688581103"><span class="ic">📞</span><div><small>Phone</small><b>+91 86885 81103</b></div></a>
+            <a class="card c-item" href="https://www.linkedin.com/in/vamsi-mikkili-930399377/" target="_blank" rel="noopener"><span class="ic">💼</span><div><small>LinkedIn</small><b>Vamsi Mikkili</b></div></a>
+            <a class="card c-item" href="https://github.com/Vamsi080" target="_blank" rel="noopener"><span class="ic">💻</span><div><small>GitHub</small><b>Vamsi080</b></div></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <span>© 2026 Vamsi Mikkili · Embedded Software Engineer · Chennai, India</span>
+      <span>Qt/QML · C++ · Websites · Android Apps</span>
+    </div>
+  </footer>
+
+  <a class="fab fab-wa" href="https://wa.me/918688581103?text=Hi%20Vamsi" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-.2-.1-1-.4-2-1.2-.7-.7-1.2-1.5-1.4-1.7-.1-.2 0-.4.1-.5l.4-.4.2-.4v-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.2-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 2.2.9 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.5-.3z"/></svg>
+  </a>
+  <a class="fab fab-top" id="toTop" href="#home" aria-label="Back to top">↑</a>
+  <div class="copy-toast" id="toast">Email copied ✓</div>
+
+  <script>
+  (function () {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* typing effect */
+    const words = ['real-time radar HMIs.', 'Qt/QML applications.', 'high-performance C++.', 'embedded Linux software.', 'modern websites.', 'Android apps.'];
+    const el = document.getElementById('typed');
+    let w = 0, c = 0, del = false;
+    function type() {
+      const word = words[w];
+      el.textContent = word.slice(0, c);
+      if (!del && c < word.length) { c++; setTimeout(type, 70); }
+      else if (!del) { del = true; setTimeout(type, 1600); }
+      else if (c > 0) { c--; setTimeout(type, 35); }
+      else { del = false; w = (w + 1) % words.length; setTimeout(type, 300); }
+    }
+    if (reduce) el.textContent = words[0]; else type();
+
+    /* scroll reveal + counters */
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('visible');
+        e.target.querySelectorAll('.count').forEach(countUp);
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(r => io.observe(r));
+
+    function countUp(n) {
+      const to = parseFloat(n.dataset.to), dec = parseInt(n.dataset.dec || 0), dur = 1600, t0 = performance.now();
+      function step(t) {
+        const p = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+        n.textContent = (to * e).toFixed(dec);
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    /* nav, progress, back-to-top, active link */
+    const nav = document.getElementById('nav'), prog = document.getElementById('progress'), toTop = document.getElementById('toTop');
+    const links = [...document.querySelectorAll('nav ul a')];
+    const secs = links.map(a => document.querySelector(a.getAttribute('href')));
+    function onScroll() {
+      const y = window.scrollY, h = document.documentElement.scrollHeight - innerHeight;
+      nav.classList.toggle('scrolled', y > 30);
+      prog.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+      toTop.classList.toggle('show', y > 700);
+      let idx = -1;
+      secs.forEach((s, i) => { if (s && s.getBoundingClientRect().top < innerHeight * 0.4) idx = i; });
+      links.forEach((a, i) => a.classList.toggle('active', i === idx));
+    }
+    addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+    /* mobile menu */
+    const menu = document.getElementById('mobileMenu'), burger = document.getElementById('hamburger');
+    burger.addEventListener('click', () => { const o = menu.classList.toggle('open'); burger.textContent = o ? '✕' : '☰'; });
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { menu.classList.remove('open'); burger.textContent = '☰'; }));
+
+    /* cursor glow + card spotlight + tilt */
+    const glow = document.getElementById('cursorGlow');
+    const fine = window.matchMedia('(pointer: fine)').matches;
+    if (fine && !reduce) {
+      addEventListener('mousemove', e => { glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px'; });
+      document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+          const r = card.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+          card.style.setProperty('--mx', x + 'px'); card.style.setProperty('--my', y + 'px');
+          if (card.classList.contains('proj') || card.classList.contains('serv') || card.classList.contains('skill-card')) {
+            const rx = ((y / r.height) - 0.5) * -5, ry = ((x / r.width) - 0.5) * 5;
+            card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+          }
+        });
+        card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+      });
+    }
+
+    /* copy email */
+    const toast = document.getElementById('toast');
+    document.querySelectorAll('[data-copy]').forEach(a => a.addEventListener('click', e => {
+      e.preventDefault();
+      const v = a.dataset.copy;
+      (navigator.clipboard ? navigator.clipboard.writeText(v) : Promise.reject()).then(() => {
+        toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1800);
+      }).catch(() => { location.href = 'mailto:' + v; });
+    }));
+
+    /* background particle network */
+    const cv = document.getElementById('bg-canvas'), ctx = cv.getContext('2d');
+    let W, H, pts = [];
+    function size() {
+      W = cv.width = innerWidth * devicePixelRatio; H = cv.height = innerHeight * devicePixelRatio;
+      cv.style.width = innerWidth + 'px'; cv.style.height = innerHeight + 'px';
+      const n = Math.min(70, Math.floor(innerWidth / 20));
+      pts = Array.from({ length: n }, () => ({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .3 * devicePixelRatio, vy: (Math.random() - .5) * .3 * devicePixelRatio }));
+    }
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      const max = 130 * devicePixelRatio;
+      for (let i = 0; i < pts.length; i++) {
+        const p = pts[i];
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > W) p.vx *= -1;
+        if (p.y < 0 || p.y > H) p.vy *= -1;
+        ctx.fillStyle = 'rgba(165,180,252,.5)';
+        ctx.beginPath(); ctx.arc(p.x, p.y, 1.4 * devicePixelRatio, 0, 6.283); ctx.fill();
+        for (let j = i + 1; j < pts.length; j++) {
+          const q = pts[j], dx = p.x - q.x, dy = p.y - q.y, d = Math.sqrt(dx * dx + dy * dy);
+          if (d < max) { ctx.strokeStyle = `rgba(99,102,241,${(1 - d / max) * .22})`; ctx.lineWidth = devicePixelRatio * .8; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke(); }
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    size(); addEventListener('resize', size);
+    if (!reduce) draw();
+  })();
+  </script>
+</body>
+</html>
